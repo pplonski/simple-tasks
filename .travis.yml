@@ -8,7 +8,7 @@ before_script:
   - docker-compose up --build -d
 
 script:
-  - python /app/backend/tests/run.py -v
+  - python backend/tests/run.py -v
 
 after_script:
   - docker-compose down
