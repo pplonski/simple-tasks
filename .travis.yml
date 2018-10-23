@@ -1,4 +1,6 @@
-
+language: python
+python:
+  - "3.6"
 sudo: required
 dist: trusty
 env:
@@ -6,6 +8,7 @@ env:
 
 before_script:
   - docker-compose up --build -d
+  pip install -r requirements.txt
 
 script:
   - python backend/tests/run.py -v
