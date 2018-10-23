@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+    nginx:
+        extends:
+            file: docker-common.yml
+            service: nginx
+        ports:
+            - 8000:8000
+        volumes:
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        volumes_from:
+            - asgiserver
+    postgres:
+        extends:
+            file: docker-common.yml
+            service: postgres
+        ports:
+            - 5433:5432
+        environment:
+            FILLA_DB_USER: tasks_user
+            FILLA_DB_PASSWORD: tasks_password
+            FILLA_DB_DATABASE: simple_tasks
+            POSTGRES_USER: postgres
+        volumes:
+            - ./docker/postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    redis:
+        image: redis:3.0-alpine
+        restart: unless-stopped
+        ports:
+            - 6378:6379
+    asgiserver:
+        extends:
+            file: docker-common.yml
+            service: server
+        entrypoint: /app/docker/server/asgi-entrypoint.sh
+        links:
+            - postgres
+            - redis
+        environment:
+            DATABASE_URL: postgres
+            DATABASE_NAME: simple_tasks
+            DATABASE_USER: tasks_user
+            DATABASE_PASS: tasks_password
+            DATABASE_PORT: 5432
+            REDIS_URL: redis
+        expose:
+            - 9000
