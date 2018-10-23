@@ -1,0 +1,14 @@
+
+sudo: required
+dist: trusty
+env:
+  DOCKER_COMPOSE_VERSION: 1.8.0
+  
+before_script:
+  - docker-compose up --build -d
+
+script:
+  - ./test.sh
+
+after_script:
+  - docker-compose down
