@@ -3,12 +3,12 @@ sudo: required
 dist: trusty
 env:
   DOCKER_COMPOSE_VERSION: 1.8.0
-  
+
 before_script:
   - docker-compose up --build -d
 
 script:
-  - ./test.sh
+  - python /app/backend/tests/run.py -v
 
 after_script:
   - docker-compose down

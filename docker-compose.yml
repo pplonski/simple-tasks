@@ -29,20 +29,44 @@ services:
         restart: unless-stopped
         ports:
             - 6378:6379
+    rabbitmq:
+        image: rabbitmq:3.7-alpine
+        restart: unless-stopped
     asgiserver:
         extends:
             file: docker-common.yml
-            service: server
-        entrypoint: /app/docker/server/asgi-entrypoint.sh
+            service: backend
+        entrypoint: /app/docker/backend/asgi-entrypoint.sh
         links:
             - postgres
             - redis
-        environment:
-            DATABASE_URL: postgres
-            DATABASE_NAME: simple_tasks
-            DATABASE_USER: tasks_user
-            DATABASE_PASS: tasks_password
-            DATABASE_PORT: 5432
-            REDIS_URL: redis
+            - rabbitmq
         expose:
             - 9000
+    worker:
+        extends:
+            file: docker-common.yml
+            service: backend
+        entrypoint: /app/docker/backend/worker-entrypoint.sh
+        links:
+            - postgres
+            - redis
+            - rabbitmq
+    redislistener:
+        extends:
+            file: docker-common.yml
+            service: backend
+        entrypoint: /app/docker/backend/redis-listener-entrypoint.sh
+        links:
+            - postgres
+            - redis
+            - rabbitmq
+    workerlistener:
+        extends:
+            file: docker-common.yml
+            service: backend
+        entrypoint: /app/docker/backend/worker-listener-entrypoint.sh
+        links:
+            - postgres
+            - redis
+            - rabbitmq

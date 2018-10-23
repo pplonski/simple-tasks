@@ -7,6 +7,15 @@ from channels.layers import get_channel_layer
 
 from asgiref.sync import async_to_sync
 
+
+import os
+import sys
+BACKEND_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BACKEND_DIR)
+sys.path.insert(0, BACKEND_DIR)
+from settings import REDIS_URL, REDIS_PORT
+
+
 CELERY_CHANNELS = 'celery-task-meta-*'
 
 def extract_msg(item):
@@ -19,7 +28,7 @@ def extract_msg(item):
     except json.decoder.JSONDecodeError as e:
         # This can happen when task failed
         return None
-    if item_data['status'] not in ['PROGRESS', 'SUCCESS']:
+    if item_data['status'] not in ['PROGRESS']: #, 'SUCCESS']:
         return None
     if item_data.get('status') is None:
         return None
@@ -40,7 +49,7 @@ def extract_msg(item):
 def main():
     ''' Running redis listener and sending updates to websocket channel '''
     channel_layer = get_channel_layer()
-    redis_instance = redis.StrictRedis(host='localhost', port=6379, db=0)
+    redis_instance = redis.StrictRedis(host=REDIS_URL, port=REDIS_PORT, db=0)
     pubsub = redis_instance.pubsub()
     pubsub.psubscribe(CELERY_CHANNELS)
 

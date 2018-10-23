@@ -11,9 +11,9 @@ from crash_methods import crash_with_segfault, crash_with_import
 
 import time
 from celery import Celery
-from settings import BROKER_URL, REDIS_URL
+from settings import BROKER_URL, REDIS_URL, REDIS_PORT
 
-WORKERS = Celery('simple_worker', broker=BROKER_URL, backend=REDIS_URL)
+WORKERS = Celery('simple_worker', broker=BROKER_URL, backend='redis://{0}:{1}'.format(REDIS_URL, REDIS_PORT))
 
 class ArgumentNotFoundError(Exception):
     pass

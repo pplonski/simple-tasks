@@ -11,10 +11,18 @@ services:
             - 5432
         volumes:
           - ./docker/postgres/data:/var/lib/postgresql
-    server:
+    backend:
         restart: always
         build:
             context: .
-            dockerfile: ./docker/server/Dockerfile
+            dockerfile: ./docker/backend/Dockerfile
         volumes:
             - .:/app
+        environment:
+            DATABASE_URL: postgres
+            DATABASE_NAME: simple_tasks
+            DATABASE_USER: tasks_user
+            DATABASE_PASS: tasks_password
+            DATABASE_PORT: 5432
+            REDIS_URL: redis
+            BROKER_URL: rabbitmq
