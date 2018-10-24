@@ -24,6 +24,24 @@ class TestTasksWebSocket(TestTasksBase):
 
     def test_ws_ends_success(self):
         pass
+        '''
+        ws = create_connection(self.get_server_ws())
+
+        task = self.create_task(2,0)
+        self.assertEqual(task['state'], 'CREATED')
+
+        ws.settimeout(0.1)
+        for i in range(10):
+            result =  json.loads(ws.recv())
+            print(i, result)
+            if 'PROGRESS' == result['data']['state']:
+                continue
+            else:
+                break
+
+        ws.close()
+        
+        '''
 
 
     def test_ws_fail_with_exception(self):

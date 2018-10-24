@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 # Database
 
-from settings import DATABASE_URL, DATABASE_NAME, DATABASE_USER, DATABASE_PASS, DATABASE_PORT
+from config import DATABASE_URL, DATABASE_NAME, DATABASE_USER, DATABASE_PASS, DATABASE_PORT
 
 DATABASES = {
     'default': {
@@ -167,7 +167,7 @@ SITE_ID = 1
 
 ASGI_APPLICATION = "server.routing.application"
 
-from settings import REDIS_URL, REDIS_PORT
+from config import REDIS_URL, REDIS_PORT
 
 CHANNEL_LAYERS = {
     'default': {

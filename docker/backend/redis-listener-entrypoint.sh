@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-until cd /app/backend/server
+until cd /app/backend/worker
 do
-    echo "Waiting for server volume..."
+    echo "Waiting for worker volume..."
 done
 
 python redis_listener.py

@@ -11,7 +11,7 @@ from crash_methods import crash_with_segfault, crash_with_import
 
 import time
 from celery import Celery
-from settings import BROKER_URL, REDIS_URL, REDIS_PORT
+from config import BROKER_URL, REDIS_URL, REDIS_PORT
 
 WORKERS = Celery('simple_worker', broker=BROKER_URL, backend='redis://{0}:{1}'.format(REDIS_URL, REDIS_PORT))
 
@@ -22,7 +22,7 @@ class ArgumentNotFoundError(Exception):
 @WORKERS.task(name='worker.worker.task_add', bind=True)
 def task_add(self, params):
     ''' Celery task job '''
-    TaskUpdater.update(db_id=params['db_id'], task_id=self.request.id, new_state='PROGRESS')
+    TaskUpdater.update_db(db_id=params['db_id'], task_id=self.request.id, new_state='PROGRESS')
 
     # check the json schema
     for arg in ['arg1', 'arg2', 'db_id']:
@@ -41,7 +41,7 @@ def task_add(self, params):
         time.sleep(1)
 
     # Set the state for task
-    TaskUpdater.update(db_id=params['db_id'], new_state='SUCCESS',
+    TaskUpdater.update_db(db_id=params['db_id'], new_state='SUCCESS',
                         new_result={'data': params['arg1']+params['arg2']})
 
 
