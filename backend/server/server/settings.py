@@ -33,7 +33,8 @@ SECRET_KEY = 'h4a78jxyq5!kd4!5*qs21u7!=a*w%rl8*&7_a2894o-=uj2wy2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'asgiserver', 'wsgiserver']
+# SECURITY WARNING !!!!
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'asgiserver', 'wsgiserver', '*'] # allow all host, not good, use it for testing only!!!!!!
 
 
 # Application definition
