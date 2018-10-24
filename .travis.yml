@@ -11,6 +11,7 @@ before_script:
   - docker-compose up --build -d
 
 script:
+  - docker ps
   - python backend/tests/run.py -v
 
 after_script:
