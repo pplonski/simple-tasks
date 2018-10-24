@@ -1,7 +1,7 @@
 import os
 
 BROKER_URL = os.environ.get('BROKER_URL', 'pyamqp://guest@localhost//')
-REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost') # 'redis://redis:6379/0')
+REDIS_URL = os.environ.get('REDIS_URL', '127.0.0.1') # 'redis://redis:6379/0')
 REDIS_PORT = os.environ.get('REDIS_PORT', '6379') # 'redis://redis:6379/0')
 
 DATABASE_URL = os.environ.get('DATABASE_URL', '127.0.0.1')

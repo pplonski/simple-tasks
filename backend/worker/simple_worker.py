@@ -43,7 +43,7 @@ def task_add(self, params):
     # Set the state for task
     TaskUpdater.update_db(db_id=params['db_id'], new_state='SUCCESS',
                         new_result={'data': params['arg1']+params['arg2']})
-    # Send info to channel                    
+    # Send info to channel
     data = {'state': 'SUCCESS', 'progress': 100, 'db_id': params['db_id']}
     msg = {"type": "task_update_message", "data": data}
     TaskUpdater.update_ws(msg)
