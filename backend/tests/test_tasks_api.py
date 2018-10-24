@@ -26,11 +26,17 @@ class TestTasksApi(TestTasksBase):
 
         task = self.create_task(-1,2)
         self.assertEqual(task['state'], 'CREATED')
-        time.sleep(1)
-        task2 = self.get_task(task['id'])
 
+        for i in range(10):
+            task2 = self.get_task(task['id'])
+            print(i, task2)
+            if task2['state'] == 'FAILURE':
+                break
+            time.sleep(1)
+                
         self.assertEqual(task2['state'], 'FAILURE')
         self.assertTrue('exception' in task2['result'])
+
 
     def test_task_exception(self):
 
@@ -38,6 +44,6 @@ class TestTasksApi(TestTasksBase):
         self.assertEqual(task['state'], 'CREATED')
         time.sleep(1)
         task2 = self.get_task(task['id'])
-        
+
         self.assertEqual(task2['state'], 'FAILURE')
         self.assertTrue('exception' in task2['result'])
