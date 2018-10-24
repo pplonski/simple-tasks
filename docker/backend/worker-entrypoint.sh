@@ -5,4 +5,4 @@ do
     echo "Waiting for worker volume..."
 done
 
-python worker_listener.py
+celery -A simple_worker worker --loglevel=info -E

@@ -29,11 +29,10 @@ class TestTasksApi(TestTasksBase):
 
         for i in range(10):
             task2 = self.get_task(task['id'])
-            print(i, task2)
             if task2['state'] == 'FAILURE':
                 break
             time.sleep(1)
-                
+
         self.assertEqual(task2['state'], 'FAILURE')
         self.assertTrue('exception' in task2['result'])
 
