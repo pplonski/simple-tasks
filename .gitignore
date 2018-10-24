@@ -1,2 +1,11 @@
+/venv
+/node_modules
+
 *.pyc
-venv/
+*.pyo
+
+.env
+
+package-lock.json
+
+*.rdb
