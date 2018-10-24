@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-cd /app/backend/worker
+until cd /app/backend/worker
+do
+    echo "Waiting for worker volume..."
+done
 
 celery -A simple_worker worker --loglevel=info -E
