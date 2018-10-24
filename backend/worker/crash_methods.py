@@ -6,7 +6,6 @@ def crash_with_segfault():
         f = lambda f:f(f)
         f(f)
     except Exception as e:
-        print(e)
         raise Exception('Segfault is not catched')
 
 def crash_with_import():

@@ -28,7 +28,7 @@ class TestTasksApi(TestTasksBase):
         self.assertEqual(task['state'], 'CREATED')
         time.sleep(1)
         task2 = self.get_task(task['id'])
-        print(task2)
+
         self.assertEqual(task2['state'], 'FAILURE')
         self.assertTrue('exception' in task2['result'])
 
@@ -38,6 +38,6 @@ class TestTasksApi(TestTasksBase):
         self.assertEqual(task['state'], 'CREATED')
         time.sleep(1)
         task2 = self.get_task(task['id'])
-        print(task2)
+        
         self.assertEqual(task2['state'], 'FAILURE')
         self.assertTrue('exception' in task2['result'])
