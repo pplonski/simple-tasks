@@ -1,0 +1,16 @@
+{
+  "name": "simple-tasks",
+  "scripts": {
+    "server": "cd backend/server && python manage.py runserver",
+    "client": "cd client && npm start",
+    "rabbitmq": "sudo rabbitmq-server",
+    "redis": "sudo redis-server /etc/redis/redis.conf",
+    "celery": "cd backend/worker && celery -A simple_worker worker --loglevel=info -E",
+    "redis-listener": "cd backend/worker && python redis_listener.py",
+    "worker-listener": "cd backend/worker && python worker_listener.py",
+    "listeners": "cd backend/worker && python redis_listener.py \"cd backend/worker && python worker_listener.py\""
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
