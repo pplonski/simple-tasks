@@ -13,7 +13,8 @@ import time
 from celery import Celery
 from config import BROKER_URL, REDIS_URL, REDIS_PORT
 
-WORKERS = Celery('simple_worker', broker=BROKER_URL, backend='redis://{0}:{1}'.format(REDIS_URL, REDIS_PORT))
+WORKERS = Celery('simple_worker')
+WORKERS.config_from_object('celeryconfig')
 
 class ArgumentNotFoundError(Exception):
     pass

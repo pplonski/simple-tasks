@@ -12,7 +12,7 @@ def my_monitor(app):
             return
 
         task = state.tasks.get(event['uuid'])
-
+        
         # update DB
         new_result = {'exception': event['exception']} if 'exception' in event else None
         db_id = TaskUpdater.update_db(task_id = event['uuid'], new_state=event['state'], new_result=new_result)
