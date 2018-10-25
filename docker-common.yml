@@ -26,3 +26,4 @@ services:
             DATABASE_PORT: 5432
             REDIS_URL: redis
             BROKER_URL: rabbitmq
+            DJANGO_DEBUG: 'false'
