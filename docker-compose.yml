@@ -43,6 +43,17 @@ services:
             - rabbitmq
         expose:
             - 9000
+    wsgiserver:
+        extends:
+            file: docker-common.yml
+            service: backend
+        entrypoint: /app/docker/backend/wsgi-entrypoint.sh
+        links:
+            - postgres
+            - redis
+            - rabbitmq
+        expose:
+            - 8000        
     worker:
         extends:
             file: docker-common.yml
