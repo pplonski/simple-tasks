@@ -53,7 +53,7 @@ services:
             - redis
             - rabbitmq
         expose:
-            - 8000        
+            - 8000
     worker:
         extends:
             file: docker-common.yml
@@ -81,3 +81,8 @@ services:
             - postgres
             - redis
             - rabbitmq
+    client:
+        extends:
+            file: docker-common.yml
+            service: client
+        #entrypoint: /app/docker/client/entrypoint.sh
