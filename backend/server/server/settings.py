@@ -31,7 +31,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 SECRET_KEY = 'h4a78jxyq5!kd4!5*qs21u7!=a*w%rl8*&7_a2894o-=uj2wy2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+from config import DJANGO_DEBUG
+DEBUG = DJANGO_DEBUG
 
 # SECURITY WARNING !!!!
 ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'asgiserver', 'wsgiserver', '*'] # allow all host, not good, use it for testing only!!!!!!
@@ -104,13 +105,6 @@ DATABASES = {
         'PORT': DATABASE_PORT,
     }
 }
-'''
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-
-'''
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

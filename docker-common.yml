@@ -3,7 +3,9 @@ version: '2'
 services:
     nginx:
         restart: always
-        image: nginx:1.11.6-alpine
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
     postgres:
         restart: always
         image: postgres:9.5.6-alpine
@@ -26,3 +28,11 @@ services:
             DATABASE_PORT: 5432
             REDIS_URL: redis
             BROKER_URL: rabbitmq
+            DJANGO_DEBUG: 'false'
+    client:
+        restart: always
+        build:
+            context: .
+            dockerfile: ./docker/client/Dockerfile
+        volumes:
+            - .:/app
