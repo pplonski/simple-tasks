@@ -18,11 +18,14 @@ import './App.css';
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
+let webSocketUrl;
+(process.env.REACT_APP_WEBSOCKET_URL!==undefined) ? webSocketUrl=process.env.REACT_APP_WEBSOCKET_URL : webSocketUrl="ws://127.0.0.1:8000/tasks/"
+
 class App extends Component {
   render() {
     return (
     	<Provider store={ store }>
-        <WebSocketContainer host={process.env.REACT_APP_WEBSOCKET_URL} autoconnect={true}>
+        <WebSocketContainer host={ webSocketUrl } autoconnect={true}>
       		<Router>
       			<div className="App">
   	    			<NavbarMain />
