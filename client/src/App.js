@@ -22,7 +22,7 @@ class App extends Component {
   render() {
     return (
     	<Provider store={ store }>
-        <WebSocketContainer host="ws://127.0.0.1:8000/tasks/" autoconnect={true}>
+        <WebSocketContainer host={process.env.REACT_APP_WEBSOCKET_URL} autoconnect={true}>
       		<Router>
       			<div className="App">
   	    			<NavbarMain />

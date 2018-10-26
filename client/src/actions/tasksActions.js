@@ -23,7 +23,7 @@ export const getTasks = () => dispatch => {
 // Add task
 export const addTask = (taskData, history) => dispatch => {
 	axios
-		.post('/api/tasks', taskData)
+		.post(`/api/tasks`, taskData)
 		.then(res => history.push('/tasks'))
 		.catch(err =>
 			dispatch({
