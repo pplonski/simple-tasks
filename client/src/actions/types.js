@@ -3,6 +3,7 @@ export const GET_ERRORS = 'GET_ERRORS';
 // Tasks
 export const TASKS_LOADING = 'TASKS_LOADING';
 export const GET_TASKS = 'GET_TASKS';
+export const GET_COMPLETED_TASK = 'GET_COMPLETED_TASK';
 export const ADD_TASK = 'ADD_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 

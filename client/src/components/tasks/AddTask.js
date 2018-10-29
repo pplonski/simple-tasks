@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import isEmpty from '../../validation/isEmpty';
+
 import TextFieldGroup from '../common/TextFieldGroup';
 
 import { addTask } from '../../actions/tasksActions';
@@ -23,7 +25,10 @@ class AddTask extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.errors) {
+		if(!isEmpty(nextProps.errors)) {
+			console.log('nextProps errors');
+			console.log(nextProps.errors);
+			console.log('-----------------');
 			this.setState({ errors: nextProps.errors })
 		}
 	}

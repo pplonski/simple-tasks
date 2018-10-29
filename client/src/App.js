@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 
@@ -27,17 +27,20 @@ class App extends Component {
   render() {
     return (
     	<Provider store={ store }>
-        <WebSocketContainer host={ webSocketUrl } autoconnect={true}>
+        
       		<Router>
       			<div className="App">
   	    			<NavbarMain />
   	    			<Route exact path="/" component={ Home } />
-  	    			<Route exact path="/tasks" component={ Tasks } />
+              <Switch>
+                <WebSocketContainer host={ webSocketUrl } autoconnect={true}>
+    	    			  <Route exact path="/tasks" component={ Tasks } />
+                </WebSocketContainer>
+              </Switch>
   	    			<Route exact path="/tasks/add" component={ AddTask } />
               <FooterMain />
       			</div>
   	      </Router>
-          </WebSocketContainer>
       </Provider>
     );
   }
