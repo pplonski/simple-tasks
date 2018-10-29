@@ -60,7 +60,7 @@ class Tasks extends Component {
 												{'badge-success': ( task.state === 'SUCCESS' )},
 												{'badge-info': ( task.state === 'CREATED' )},
 												{'badge-info': ( task.state === 'PROGRESS' )},
-												{'badge-danger': ( task.state === 'FAILED' )}
+												{'badge-danger': ( task.state === 'FAILURE' )}
 											)}
 										>
 											{task.state}
