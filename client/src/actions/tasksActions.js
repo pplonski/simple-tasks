@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ERRORS, GET_TASKS, DELETE_TASK, TASKS_LOADING } from './types';
+import { GET_ERRORS, GET_TASKS, GET_COMPLETED_TASK, DELETE_TASK, TASKS_LOADING } from './types';
 
 // Get all tasks
 export const getTasks = () => dispatch => {
@@ -15,6 +15,24 @@ export const getTasks = () => dispatch => {
 		.catch(err =>
 			dispatch({
 				type: GET_TASKS,
+				payload: null
+			})
+		);
+}
+
+// Get completed task
+export const getCompletedTask = (id) => dispatch => {
+	axios
+		.get(`/api/tasks/${id}`)
+		.then(res => 
+			dispatch({
+				type: GET_COMPLETED_TASK,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_COMPLETED_TASK,
 				payload: null
 			})
 		);

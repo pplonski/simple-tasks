@@ -6,11 +6,17 @@ import { Progress } from 'reactstrap';
 import classnames from 'classnames';
 
 import { getTasks } from '../../actions/tasksActions';
+import { getCompletedTask } from '../../actions/tasksActions';
 import { deleteTask } from '../../actions/tasksActions';
 
 class Tasks extends Component {
 	componentDidMount() {
 		this.props.getTasks()
+	}
+	componentDidUpdate(prevProps) {
+		if(this.props.tasks.completedTask!==prevProps.tasks.completedTask) {
+			this.props.getCompletedTask(this.props.tasks.completedTask);
+		}
 	}
 	onDeleteClick(id) {
 		this.props.deleteTask(id);
@@ -53,7 +59,8 @@ class Tasks extends Component {
 											className={classnames( 'badge', 
 												{'badge-success': ( task.state === 'SUCCESS' )},
 												{'badge-info': ( task.state === 'CREATED' )},
-												{'badge-info': ( task.state === 'PROGRESS' )}
+												{'badge-info': ( task.state === 'PROGRESS' )},
+												{'badge-danger': ( task.state === 'FAILED' )}
 											)}
 										>
 											{task.state}
@@ -101,6 +108,7 @@ class Tasks extends Component {
 
 Tasks.propTypes = {
 	getTasks: PropTypes.func.isRequired,
+	getCompletedTask: PropTypes.func.isRequired,
 	deleteTask: PropTypes.func.isRequired,
 	tasks: PropTypes.object.isRequired
 }
@@ -109,4 +117,4 @@ const mapStateToProps = state => ({
 	tasks: state.tasks
 });
 
-export default connect(mapStateToProps, { getTasks, deleteTask })(withRouter(Tasks));
+export default connect(mapStateToProps, { getTasks, getCompletedTask, deleteTask })(withRouter(Tasks));
