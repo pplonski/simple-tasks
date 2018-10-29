@@ -11,8 +11,6 @@ do
     sleep 2
 done
 
-mkdir -p /app/backend/server/staticfiles
-./manage.py collectstatic --noinput
 
 gunicorn server.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4
 #./manage.py runserver 0.0.0.0:8000 # --settings=settings.dev_docker

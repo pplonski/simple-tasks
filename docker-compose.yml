@@ -36,7 +36,7 @@ services:
     wsgiserver:
         extends:
             file: docker-common.yml
-            service: backend
+            service: server
         entrypoint: /app/docker/backend/wsgi-entrypoint.sh
         links:
             - postgres
@@ -55,30 +55,30 @@ services:
             - rabbitmq
         expose:
             - 9000
-    worker:
-        extends:
-            file: docker-common.yml
-            service: backend
-        entrypoint: /app/docker/backend/worker-entrypoint.sh
-        links:
-            - postgres
-            - redis
-            - rabbitmq
-    redislistener:
-        extends:
-            file: docker-common.yml
-            service: backend
-        entrypoint: /app/docker/backend/redis-listener-entrypoint.sh
-        links:
-            - postgres
-            - redis
-            - rabbitmq
-    workerlistener:
-        extends:
-            file: docker-common.yml
-            service: backend
-        entrypoint: /app/docker/backend/worker-listener-entrypoint.sh
-        links:
-            - postgres
-            - redis
-            - rabbitmq
+#    worker:
+#        extends:
+#            file: docker-common.yml
+#            service: backend
+#        entrypoint: /app/docker/backend/worker-entrypoint.sh
+#        links:
+#            - postgres
+#            - redis
+#            - rabbitmq
+#    redislistener:
+#        extends:
+#            file: docker-common.yml
+#            service: backend
+#        entrypoint: /app/docker/backend/redis-listener-entrypoint.sh
+#        links:
+#            - postgres
+#            - redis
+#            - rabbitmq
+#    workerlistener:
+#        extends:
+#            file: docker-common.yml
+#            service: backend
+#        entrypoint: /app/docker/backend/worker-listener-entrypoint.sh
+#        links:
+#            - postgres
+#            - redis
+#            - rabbitmq
