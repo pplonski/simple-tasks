@@ -3,6 +3,7 @@ version: '2'
 services:
     nginx:
         restart: always
+        #image: nginx:1.12-alpine
         build:
             context: .
             dockerfile: ./docker/nginx/Dockerfile
@@ -29,10 +30,3 @@ services:
             REDIS_URL: redis
             BROKER_URL: rabbitmq
             DJANGO_DEBUG: 'false'
-    client:
-        restart: always
-        build:
-            context: .
-            dockerfile: ./docker/client/Dockerfile
-        volumes:
-            - .:/app

@@ -10,7 +10,7 @@ services:
         volumes:
             - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
         volumes_from:
-            - asgiserver
+            - wsgiserver
     postgres:
         extends:
             file: docker-common.yml
@@ -32,17 +32,7 @@ services:
     rabbitmq:
         image: rabbitmq:3.7-alpine
         restart: unless-stopped
-    asgiserver:
-        extends:
-            file: docker-common.yml
-            service: backend
-        entrypoint: /app/docker/backend/asgi-entrypoint.sh
-        links:
-            - postgres
-            - redis
-            - rabbitmq
-        expose:
-            - 9000
+
     wsgiserver:
         extends:
             file: docker-common.yml
@@ -54,6 +44,17 @@ services:
             - rabbitmq
         expose:
             - 8000
+    asgiserver:
+        extends:
+            file: docker-common.yml
+            service: backend
+        entrypoint: /app/docker/backend/asgi-entrypoint.sh
+        links:
+            - postgres
+            - redis
+            - rabbitmq
+        expose:
+            - 9000
     worker:
         extends:
             file: docker-common.yml
@@ -81,8 +82,3 @@ services:
             - postgres
             - redis
             - rabbitmq
-    client:
-        extends:
-            file: docker-common.yml
-            service: client
-        #entrypoint: /app/docker/client/entrypoint.sh
