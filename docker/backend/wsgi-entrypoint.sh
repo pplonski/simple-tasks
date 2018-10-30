@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+ls -al /app/backend/server/static/client/static/js
+
+
 until cd /app/backend/server
 do
     echo "Waiting for server volume..."
@@ -11,8 +14,10 @@ do
     sleep 2
 done
 
-mkdir -p /app/backend/server/staticfiles
-./manage.py collectstatic --noinput
+echo '0000000000000000000'
+echo '0000000000000000000'
+echo '0000000000000000000'
+
 
 gunicorn server.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4
 #./manage.py runserver 0.0.0.0:8000 # --settings=settings.dev_docker
