@@ -25,6 +25,7 @@ class Tasks extends Component {
 	render() {
 		const { tasks, loading } = this.props.tasks;
 		let tasksItems;
+		//console.log(this.props)
 
 		if(tasks === null || loading) {
 			tasksItems = <div>Loading...</div>

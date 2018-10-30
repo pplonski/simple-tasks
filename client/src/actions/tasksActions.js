@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { GET_ERRORS, GET_TASKS, GET_COMPLETED_TASK, DELETE_TASK, TASKS_LOADING } from './types';
 
+let apiUrl;
+(process.env.REACT_APP_API_URL!==undefined) ? apiUrl=process.env.REACT_APP_API_URL : apiUrl=""
+
 // Get all tasks
 export const getTasks = () => dispatch => {
 	dispatch(setTasksLoading());
 	axios
-		.get(`/api/tasks`)
+		.get(`${apiUrl}/api/tasks`)
 		.then(res => 
 			dispatch({
 				type: GET_TASKS,
@@ -23,7 +26,7 @@ export const getTasks = () => dispatch => {
 // Get completed task
 export const getCompletedTask = (id) => dispatch => {
 	axios
-		.get(`/api/tasks/${id}`)
+		.get(`${apiUrl}/api/tasks/${id}`)
 		.then(res => 
 			dispatch({
 				type: GET_COMPLETED_TASK,
@@ -41,7 +44,7 @@ export const getCompletedTask = (id) => dispatch => {
 // Add task
 export const addTask = (taskData, history) => dispatch => {
 	axios
-		.post(`/api/tasks`, taskData)
+		.post(`${apiUrl}/api/tasks`, taskData)
 		.then(res => history.push('/tasks'))
 		.catch(err =>
 			dispatch({
@@ -55,7 +58,7 @@ export const addTask = (taskData, history) => dispatch => {
 export const deleteTask = (id) => dispatch => {
 	//dispatch(setTasksLoading());
 	axios
-		.delete(`/api/tasks/${id}`)
+		.delete(`${apiUrl}/api/tasks/${id}`)
 		.then(res => 
 			dispatch({
 				type: DELETE_TASK,
