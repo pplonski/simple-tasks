@@ -1,0 +1,4 @@
+venv/*
+.git
+client/node_modules/*
+client/build/*

@@ -84,7 +84,7 @@ pytz==2018.5
 pyzmq==17.1.2
 qtconsole==4.4.1
 redis==2.10.6
-requests==2.19.1
+requests==2.20.0
 Send2Trash==1.5.0
 simplegeneric==0.8.1
 simplejson==3.16.0

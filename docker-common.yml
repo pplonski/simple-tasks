@@ -1,19 +1,6 @@
 version: '2'
 
 services:
-    nginx:
-        restart: always
-        image: nginx:1.12-alpine
-        #build:
-        #    context: .
-        #    dockerfile: ./docker/nginx/Dockerfile
-    postgres:
-        restart: always
-        image: postgres:9.5.6-alpine
-        expose:
-            - 5432
-        volumes:
-          - ./docker/postgres/data:/var/lib/postgresql
     backend:
         restart: always
         build:
@@ -35,8 +22,8 @@ services:
         build:
             context: .
             dockerfile: ./docker/backend/Dockerfile.server
-        volumes:
-            - .:/app
+        #volumes:
+        #    - .:/app
         environment:
             DATABASE_URL: postgres
             DATABASE_NAME: simple_tasks
