@@ -21,6 +21,11 @@ const webSocketsMiddleware = (function () {
    */
   const onClose = (ws, store, host) => event => {
     store.dispatch(webSocketsActions.webSocketDisconnected(host))
+    console.log('Socket is closed. Reconnect will be attempted in 5 second.', event.reason);
+    setTimeout(() => {
+      store.dispatch(webSocketsActions.webSocketConnect(host));
+    }, 5000);
+    
   };
 
   /**
