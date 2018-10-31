@@ -19,15 +19,15 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 let webSocketUrl;
-(process.env.REACT_APP_WEBSOCKET_URL!==undefined) ? webSocketUrl=process.env.REACT_APP_WEBSOCKET_URL : webSocketUrl="ws://0.0.0.0:8000/websockets/tasks/"
+(process.env.REACT_APP_WEBSOCKET_URL!==undefined) ? webSocketUrl=process.env.REACT_APP_WEBSOCKET_URL : webSocketUrl="ws://"+window.location.hostname+":"+window.location.port+"/websockets/tasks/"
 
-console.log("url", webSocketUrl);
+console.log("url->", webSocketUrl, window.location.hostname, window.location.port);
 
 class App extends Component {
   render() {
     return (
     	<Provider store={ store }>
-        
+
       		<Router>
       			<div className="App">
   	    			<NavbarMain />
