@@ -19,7 +19,7 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 let webSocketUrl;
-(process.env.REACT_APP_WEBSOCKET_URL!==undefined) ? webSocketUrl=process.env.REACT_APP_WEBSOCKET_URL : webSocketUrl="ws://0.0.0.0:8000/tasks/"
+(process.env.REACT_APP_WEBSOCKET_URL!==undefined) ? webSocketUrl=process.env.REACT_APP_WEBSOCKET_URL : webSocketUrl="ws://0.0.0.0:8000/websockets/tasks/"
 
 console.log("url", webSocketUrl);
 
