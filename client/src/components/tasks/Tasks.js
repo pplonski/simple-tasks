@@ -21,11 +21,11 @@ class Tasks extends Component {
 	onDeleteClick(id) {
 		this.props.deleteTask(id);
 	}
-	
+
 	render() {
 		const { tasks, loading } = this.props.tasks;
 		let tasksItems;
-		//console.log(this.props)
+		console.log(this.props)
 
 		if(tasks === null || loading) {
 			tasksItems = <div>Loading...</div>
@@ -34,10 +34,10 @@ class Tasks extends Component {
 				tasksItems = tasks.map(task => {
 					let taskResult;
 
-					if("data" in task.result) { 
-						taskResult = task.result.data 
+					if("data" in task.result) {
+						taskResult = task.result.data
 					} else if("exception" in task.result) {
-						taskResult = task.result.exception 
+						taskResult = task.result.exception
 					} else {
 						taskResult = 'Waiting...'
 					}
@@ -56,8 +56,8 @@ class Tasks extends Component {
 									<b>Id:</b> {task.id} <br/>
 									<b>Task_id:</b> {task.task_id} <br/>
 									<b>State:</b> {' '}
-										<span 
-											className={classnames( 'badge', 
+										<span
+											className={classnames( 'badge',
 												{'badge-success': ( task.state === 'SUCCESS' )},
 												{'badge-info': ( task.state === 'CREATED' )},
 												{'badge-info': ( task.state === 'PROGRESS' )},
@@ -73,7 +73,7 @@ class Tasks extends Component {
 									{taskProgress}
 								</div>
 								<div className="col-md-1">
-									<button 
+									<button
 										className="btn btn-default btn-sm"
 										onClick={this.onDeleteClick.bind(this, task.id)}
 									>
@@ -88,7 +88,7 @@ class Tasks extends Component {
 				tasksItems = <div>No tasks found...</div>
 			}
 		}
-		
+
 
 		return(
 			<div className="container">
