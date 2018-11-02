@@ -33,5 +33,10 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://0.0.0.0:8000"
+  "proxy": "http://0.0.0.0:8000",
+  "devDependencies": {
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "react-test-renderer": "^16.6.0"
+  }
 }
