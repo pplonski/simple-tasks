@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
+//import { Provider } from 'react-redux';
 import axios from 'axios';
 
+import Root from './Root';
 import WebSocketContainer from "./components/containers/WebSocketContainer";
 import NavbarMain from './components/layout/NavbarMain.js';
 import FooterMain from './components/layout/FooterMain.js';
@@ -11,7 +12,7 @@ import Home from './components/Home';
 import Tasks from './components/tasks/Tasks';
 import AddTask from './components/tasks/AddTask';
 
-import store from './store';
+//import store from './store';
 
 import './App.css';
 
@@ -26,22 +27,21 @@ console.log("url->", webSocketUrl, window.location.hostname, window.location.por
 class App extends Component {
   render() {
     return (
-    	<Provider store={ store }>
-
-      		<Router>
-      			<div className="App">
-  	    			<NavbarMain />
-  	    			<Route exact path="/" component={ Home } />
-              <Switch>
-                <WebSocketContainer host={ webSocketUrl } autoconnect={true}>
-    	    			  <Route exact path="/tasks" component={ Tasks } />
-                </WebSocketContainer>
-              </Switch>
-  	    			<Route exact path="/tasks/add" component={ AddTask } />
-              <FooterMain />
-      			</div>
-  	      </Router>
-      </Provider>
+    	<Root>
+    		<Router>
+    			<div className="App">
+	    			<NavbarMain />
+	    			<Route exact path="/" component={ Home } />
+            <Switch>
+              <WebSocketContainer host={ webSocketUrl } autoconnect={true}>
+  	    			  <Route exact path="/tasks" component={ Tasks } />
+              </WebSocketContainer>
+            </Switch>
+	    			<Route exact path="/tasks/add" component={ AddTask } />
+            <FooterMain />
+    			</div>
+	      </Router>
+      </Root>
     );
   }
 }

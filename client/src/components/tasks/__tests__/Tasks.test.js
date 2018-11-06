@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Tasks from '../../../components/tasks/Tasks';
+import Tasks from '../Tasks';
 
 
 function setup() {
