@@ -13,7 +13,7 @@ const initialState = {
 }
 
 function webSocketsReducer(state = initialState, action) {
-  console.log(action.type);
+  //console.log(action.type);
   switch (action.type) {
     case WEBSOCKET_CONNECT:
       return {

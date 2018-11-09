@@ -2,6 +2,8 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
+import isEmpty from '../../validation/isEmpty';
+
 const TextFieldGroup = ({
 	name,
 	placeholder,
@@ -18,7 +20,7 @@ const TextFieldGroup = ({
       <input 
       	type={type}
       	className={classnames('form-control form-control-lg', {
-      		'is-invalid': error
+      		'is-invalid': !isEmpty(error)
       	})}
       	placeholder={placeholder}
       	name={name}
@@ -27,7 +29,7 @@ const TextFieldGroup = ({
       	disabled={disabled}
       />
       {info && <small className="form-text text-muted">{info}</small>}
-      {error && (<div className="invalid-feedback">{error}</div>)}
+      {!isEmpty(error) && (<div className="invalid-feedback">{error}</div>)}
     </div>
 	)
 }

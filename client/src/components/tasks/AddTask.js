@@ -26,9 +26,9 @@ class AddTask extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if(!isEmpty(nextProps.errors)) {
-			console.log('nextProps errors');
-			console.log(nextProps.errors);
-			console.log('-----------------');
+			//console.log('nextProps errors');
+			//console.log(nextProps.errors);
+			//console.log('-----------------');
 			this.setState({ errors: nextProps.errors })
 		}
 	}
@@ -53,11 +53,12 @@ class AddTask extends Component {
 
 	render() {
 		const { errors } = this.state;
-
+		
 		return(
 			<div className="container">
 				<h1>Add task</h1>
 				<hr/>
+				{('global' in errors) && <div className="badge badge-danger mb-3">{errors.global}</div>}
 
 				<form onSubmit={this.onSubmit}>
 					<TextFieldGroup
@@ -65,14 +66,14 @@ class AddTask extends Component {
 						name="arg1"
 						value={this.state.arg1}
 						onChange={this.onChange}
-						error={errors.params.arg1}
+						error={ ('params' in errors) ? errors.params.arg1 : [] }
 					/>
 					<TextFieldGroup
 						placeholder="arg2"
 						name="arg2"
 						value={this.state.arg2}
 						onChange={this.onChange}
-						error={errors.params.arg2}
+						error={ ('params' in errors) ? errors.params.arg2 : [] }
 					/>
 					<input type="submit" value="Submit" className="btn btn-info mt-2" />
 					<Link to="/tasks" className="btn btn-default mt-2">Back</Link>
