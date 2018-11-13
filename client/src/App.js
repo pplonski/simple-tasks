@@ -9,6 +9,8 @@ import NavbarMain from './components/layout/NavbarMain.js';
 import FooterMain from './components/layout/FooterMain.js';
 
 import Home from './components/Home';
+import SignUp from './components/auth/SignUp';
+import SignIn from './components/auth/SignIn';
 import Tasks from './components/tasks/Tasks';
 import AddTask from './components/tasks/AddTask';
 
@@ -32,6 +34,8 @@ class App extends Component {
     			<div className="App">
 	    			<NavbarMain />
 	    			<Route exact path="/" component={ Home } />
+            <Route exact path="/sign-up" component={ SignUp } />
+            <Route exact path="/sign-in" component={ SignIn } />
             <Switch>
               <WebSocketContainer host={ webSocketUrl } autoconnect={true}>
   	    			  <Route exact path="/tasks" component={ Tasks } />

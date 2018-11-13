@@ -1,5 +1,9 @@
 export const GET_ERRORS = 'GET_ERRORS'; 
 
+// Auth
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const UNSET_CURRENT_USER = 'UNSET_CURRENT_USER';
+
 // Tasks
 export const TASKS_LOADING = 'TASKS_LOADING';
 export const GET_TASKS = 'GET_TASKS';
