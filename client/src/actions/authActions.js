@@ -6,7 +6,7 @@ import { GET_ERRORS, SET_CURRENT_USER, UNSET_CURRENT_USER } from './types';
 // Sign Up User
 export const signUpUser = (userData, history) => dispatch => {
 	axios.post('/api/auth/register/', userData)
-			.then(res => history.push('/login'))
+			.then(res => history.push('/sign-in/'))
 			.catch(err => 
 				dispatch({
 					type: GET_ERRORS,

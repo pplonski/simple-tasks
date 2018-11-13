@@ -57,6 +57,7 @@ class SignIn extends Component {
 		        <div className="col-md-8 m-auto">
 		          <h1 className="display-4 text-center">Sign In</h1>
 		          <p className="lead text-center">Sign in to your Simple Tasks account</p>
+		          {('non_field_errors' in errors) && <div className="badge badge-danger mb-3">{errors.non_field_errors}</div>}
 
 		          <form noValidate onSubmit={this.onSubmit}>
 		            <TextFieldGroup

@@ -10,7 +10,7 @@ export default function(state = initialState, action) {
 				return action.payload;
 			} else if (typeof action.payload === 'string') {
 				let errors = {}
-				errors.global = action.payload
+				errors.non_field_errors = action.payload
 				console.log(errors);
 				return errors
 			}

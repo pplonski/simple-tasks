@@ -58,7 +58,7 @@ class AddTask extends Component {
 			<div className="container">
 				<h1>Add task</h1>
 				<hr/>
-				{('global' in errors) && <div className="badge badge-danger mb-3">{errors.global}</div>}
+				{('non_field_errors' in errors) && <div className="badge badge-danger mb-3">{errors.non_field_errors}</div>}
 
 				<form onSubmit={this.onSubmit}>
 					<TextFieldGroup
