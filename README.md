@@ -2,6 +2,8 @@
 
 # Simple-tasks
 
+![Example](example.gif)
+
 Simple tasks real-time updates with django channels, DRF, celery
 
 This repo is showing example how you can use celery tasks and django channels to send tasks progress over the websockets. The client side is written in react and redux.
