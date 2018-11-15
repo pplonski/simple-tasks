@@ -52,12 +52,31 @@ INSTALLED_APPS = [
 
     # 3rd party
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_swagger',
+    'djoser',
     'channels',
     # Project Apps
     'tasks',
 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
+}
+
+DOMAIN = '127.0.0.1:8000'
+SITE_NAME = 'Foo Website'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

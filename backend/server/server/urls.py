@@ -10,7 +10,11 @@ schema_view = get_swagger_view(title='Pastebin API')
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/', include('tasks.api.urls')),
-    url(r'^schema/$', schema_view)
+    url(r'^schema/$', schema_view),
+
+    url(r'^auth/', include('djoser.urls')),
+    url(r'^auth/', include('djoser.urls.authtoken')),
+    url(r'^activate/{uid}/{token}', )
 ]
 
 if settings.DEBUG:
