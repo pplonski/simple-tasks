@@ -14,6 +14,7 @@ urlpatterns = [
 
     url(r'^auth/', include('djoser.urls')),
     url(r'^auth/', include('djoser.urls.authtoken')),
+    url(r'^activate/{uid}/{token}', )
 ]
 
 if settings.DEBUG:
