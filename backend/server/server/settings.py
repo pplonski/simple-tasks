@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'djoser',
+    #'organizations',
     'channels',
     # Project Apps
     'tasks',

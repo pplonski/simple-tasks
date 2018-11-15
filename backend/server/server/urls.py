@@ -5,7 +5,7 @@ from django.conf.urls import url, include
 
 from rest_framework_swagger.views import get_swagger_view
 
-from apps.accounts.views import ActivateByGet
+from apps.accounts.views import ActivateUserByGet
 
 schema_view = get_swagger_view(title='Pastebin API')
 
@@ -16,7 +16,10 @@ urlpatterns = [
 
     url(r'^auth/', include('djoser.urls')),
     url(r'^auth/', include('djoser.urls.authtoken')),
-    path('activate/<str:uid>/<str:token>/', ActivateByGet.as_view()) #<str:uid>/<str:token>/
+    path('activate/<str:uid>/<str:token>/', ActivateUserByGet.as_view()),
+
+    
+    #path('password/reset/confirm/<str:uid>/<str:token>/', ResetPasswordByGet.as_view()),
 ]
 
 if settings.DEBUG:
