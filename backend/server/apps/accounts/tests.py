@@ -8,12 +8,11 @@ class SignupTestCase(TestCase):
         self.client = Client()
         self.params = {'username': 'piotrek',
                         'email': 'piotrek@piotrek.pl',
-                        'password1': 'verysecret',
-                        'password2': 'verysecret'}
+                        'password': 'verysecret'}
 
     def test_create(self):
 
-        request = self.client.post('/rest-auth/registration/', self.params,
+        request = self.client.post('/auth/users/create/', self.params,
                                                 content_type="application/json")
 
         print(request)
