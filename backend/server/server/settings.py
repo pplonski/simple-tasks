@@ -75,7 +75,9 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': '/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
-    'SERIALIZERS': {},
+    'SERIALIZERS': {
+        'user_create': 'accounts.serializers.MyUserCreateSerializer',
+    },
 }
 
 DOMAIN = '127.0.0.1:8000'
