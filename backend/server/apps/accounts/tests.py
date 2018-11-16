@@ -7,7 +7,7 @@ class SignupTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.params = {'username': 'piotrek',
-                        'email': 'piotrek@piotrek.pl',
+                        #'email': 'piotrek@piotrek.pl',
                         'password': 'verysecret'}
 
     def test_create(self):
@@ -15,6 +15,6 @@ class SignupTestCase(TestCase):
         request = self.client.post('/auth/users/create/', self.params,
                                                 content_type="application/json")
 
-        print(request)
+
         print(request.json())
-        print(request.status_code)
+        self.assertTrue(request.status_code, 201)

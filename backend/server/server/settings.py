@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
@@ -54,12 +55,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'djoser',
-    #'organizations',
     'channels',
+    'organizations',
     # Project Apps
     'tasks',
-
+    'accounts',
 ]
+
+AUTH_USER_MODEL = 'accounts.MyUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -68,13 +71,12 @@ REST_FRAMEWORK = {
 }
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
+    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {},
 }
 
-PROTOCOL = 'http' # used in GET to POST user activation
 DOMAIN = '127.0.0.1:8000'
 SITE_NAME = 'Foo Website'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
