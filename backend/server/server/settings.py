@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'djoser',
     'channels',
     'organizations',
+    'django_extensions',
     # Project Apps
     'tasks',
     'accounts',
