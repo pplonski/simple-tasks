@@ -47,6 +47,7 @@ class MyUserCreateView(generics.CreateAPIView):
 
 from djoser.conf import django_settings
 
+
 class ActivateUserByGet(views.APIView):
 
     def get(self, request, uid, token, format = None):

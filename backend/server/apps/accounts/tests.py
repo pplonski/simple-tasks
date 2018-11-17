@@ -2,19 +2,56 @@ from django.test import TestCase
 from django.test import Client
 import json
 
+from rest_framework.reverse import reverse
+
 class SignupTestCase(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.params = {'username': 'piotrek',
-                        #'email': 'piotrek@piotrek.pl',
-                        'password': 'verysecret'}
 
     def test_create(self):
+        params = {'username': 'piotrek',
+                    'email': 'piotrek@piotrek.pl',
+                    'password': 'verysecret',
+                    'organization': 'bigco'}
 
-        request = self.client.post('/auth/users/create/', self.params,
+        request = self.client.post('/auth/users/create/', params,
                                                 content_type="application/json")
 
+        print(request.status_code, request.json())
+        self.assertEqual(request.status_code, 201)
 
-        print(request.json())
-        self.assertTrue(request.status_code, 201)
+        #request = self.client.post(reverse('login'), params,
+        #                                        content_type="application/json")
+        #print(request.status_code, request.json())
+
+        print('-'*50)
+
+        request = self.client.post('/auth/users/create/', params,
+                                                content_type="application/json")
+
+        print(request.status_code, request.json())
+
+        print('-'*50)
+
+        params = {'username': 'piotrek',
+                    'email': 'piotrek2@piotrek.pl',
+                    'password': 'verysecret',
+                    'organization': 'bigco'}
+
+        request = self.client.post('/auth/users/create/', params,
+                                                content_type="application/json")
+
+        print('LAST', request.status_code, request.json())
+
+
+
+    def test_missing_email(self):
+        params = {'username': 'piotrek',
+                    'password': 'verysecret'}
+
+        request = self.client.post('/auth/users/create/', params,
+                                                content_type="application/json")
+
+        #print(request.status_code, request.json())
+        self.assertEqual(request.status_code, 400)

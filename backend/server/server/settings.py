@@ -80,6 +80,7 @@ DJOSER = {
     },
 }
 
+PROTOCOL = 'https'
 DOMAIN = '127.0.0.1:8000'
 SITE_NAME = 'Foo Website'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
