@@ -13,8 +13,10 @@ from djoser.compat import get_user_email, get_user_email_field_name
 from djoser.conf import settings
 
 User = get_user_model()
-print(User)
-print('pk', User._meta.pk.name)
+from .models import MyOrganization
+
+from organizations.utils import create_organization
+
 
 class MyUserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -49,10 +51,16 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
         email = attrs.get('email')
         password = attrs.get('password')
 
-        #if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
-        #raise serializers.ValidationError({'org': 'no no'})
 
         user = User(username=username, email=email, password=password)
+
+        #my_org = MyOrganization(name=organization)
+        #print('slug', my_org.slug)
+        #print(my_org)
+        #if MyOrganization.objects.get(slug=my_org.slug).exists():
+        #    raise serializers.ValidationError({'organization': 'Already exists'})
+
+        #print('my_org', my_org)
 
         try:
             validate_password(password, user)
@@ -66,6 +74,8 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
             print('serializer.create')
             print(validated_data)
             user = self.perform_create(validated_data)
+            print('----')
+
         except IntegrityError as e:
             print('fail', str(e))
             self.fail('cannot_create_user')
@@ -73,16 +83,27 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
         return user
 
     def perform_create(self, validated_data):
+        print('srializers perform_create')
         with transaction.atomic():
-            print('serializer perform_create')
+
             organization = validated_data.get('organization')
-            print('org', organization)
-            print(validated_data)
 
             user_validated_data = {'username': validated_data.get('username'),
                                     'email': validated_data.get('email'),
                                     'password': validated_data.get('password')}
             user = User.objects.create_user(**user_validated_data)
+
+            #my_org = create_organization(user, organization)
+            my_org = MyOrganization(name=organization)
+            my_org.save()
+            print(my_org)
+            #print(my_org.slug)
+
+            orgs = MyOrganization.objects.all()
+            print(orgs)
+            for o in orgs:
+                print('>', o, o.name)
+
 
             if settings.SEND_ACTIVATION_EMAIL:
                 user.is_active = False
