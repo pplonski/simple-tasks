@@ -56,13 +56,13 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'djoser',
     'channels',
-    'organizations',
+    #'organizations',
     'django_extensions',
     # Project Apps
     'tasks',
     'accounts',
 ]
-
+#AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 AUTH_USER_MODEL = 'accounts.MyUser'
 
 REST_FRAMEWORK = {

@@ -5,27 +5,17 @@ from django.conf.urls import url, include
 
 from rest_framework_swagger.views import get_swagger_view
 
-from apps.accounts.views import ActivateUserByGet
-from apps.accounts.views import MyUserCreateView
-
-from organizations.backends import invitation_backend
+from apps.accounts.urls import urlpatterns as auth_urlpatterns
 
 schema_view = get_swagger_view(title='Pastebin API')
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/', include('tasks.api.urls')),
     url(r'^schema/$', schema_view),
-
-    url(r'^auth/users/create/?$', MyUserCreateView.as_view()),
-    url(r'^auth/', include('djoser.urls')),
-    url(r'^auth/', include('djoser.urls.authtoken')),
-    path('activate/<str:uid>/<str:token>/', ActivateUserByGet.as_view()),
-
-    #url(r'^accounts/', include('organizations.urls')),
-    #url(r'^invitations/', include(invitation_backend().get_urls())),
 ]
+
+urlpatterns += auth_urlpatterns
 
 if settings.DEBUG:
     from django.conf.urls.static import static

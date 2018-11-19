@@ -14,9 +14,10 @@ from djoser.conf import settings
 
 User = get_user_model()
 from .models import MyOrganization
+from .models import Membership
 
 from organizations.utils import create_organization
-
+from django.template.defaultfilters import slugify
 
 class MyUserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -38,29 +39,18 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'organization')
-        #fields = tuple(User.REQUIRED_FIELDS) + (
-        #    User.USERNAME_FIELD, User._meta.pk.name, 'password' #, 'organization'
-        #)
 
     def validate(self, attrs):
         print('serializer validate', attrs)
-        #print(**attrs)
         organization = attrs.get('organization')
-
         username = attrs.get('username')
         email = attrs.get('email')
         password = attrs.get('password')
 
-
         user = User(username=username, email=email, password=password)
 
-        #my_org = MyOrganization(name=organization)
-        #print('slug', my_org.slug)
-        #print(my_org)
-        #if MyOrganization.objects.get(slug=my_org.slug).exists():
-        #    raise serializers.ValidationError({'organization': 'Already exists'})
-
-        #print('my_org', my_org)
+        if MyOrganization.objects.filter(slug=slugify(organization)).exists():
+            raise serializers.ValidationError({'organization': 'orgnization with this name already exists'})
 
         try:
             validate_password(password, user)
@@ -72,12 +62,8 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         try:
             print('serializer.create')
-            print(validated_data)
             user = self.perform_create(validated_data)
-            print('----')
-
         except IntegrityError as e:
-            print('fail', str(e))
             self.fail('cannot_create_user')
 
         return user
@@ -93,11 +79,14 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
                                     'password': validated_data.get('password')}
             user = User.objects.create_user(**user_validated_data)
 
-            #my_org = create_organization(user, organization)
             my_org = MyOrganization(name=organization)
             my_org.save()
             print(my_org)
-            #print(my_org.slug)
+
+            print('memberships', Membership.objects.filter(user=user))
+            m1 = Membership(user=user, organization=my_org, status='admin')
+            m1.save()
+            print('memberships', Membership.objects.filter(user=user))
 
             orgs = MyOrganization.objects.all()
             print(orgs)

@@ -21,9 +21,9 @@ class SignupTestCase(TestCase):
         print(request.status_code, request.json())
         self.assertEqual(request.status_code, 201)
 
-        #request = self.client.post(reverse('login'), params,
-        #                                        content_type="application/json")
-        #print(request.status_code, request.json())
+        request = self.client.post(reverse('login'), params,
+                                                content_type="application/json")
+        print(request.status_code, request.json())
 
         print('-'*50)
 
