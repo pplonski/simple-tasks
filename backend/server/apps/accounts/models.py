@@ -9,6 +9,20 @@ from django.db import models
 from django.utils.timezone import now
 from django.template.defaultfilters import slugify
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+        tokens = Token.objects.all()
+        for t in tokens:
+            print('t', t)
+
+
 class AutoCreatedField(models.DateTimeField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('editable', False)
@@ -74,6 +88,12 @@ class MyUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = MyUserManager()
+
+    def delete(self, *args, **kwargs):
+        print('user delete')
+        super().delete(*args, **kwargs)  # Call the "real" save() method.
+        print('after user delete')
+
 
 class Membership(models.Model):
     statuses = (
