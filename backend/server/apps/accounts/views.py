@@ -23,10 +23,12 @@ from djoser.conf import settings
 
 from rest_framework import generics, permissions, status, views, viewsets
 
+
 class MyUserCreateView(generics.CreateAPIView):
     """
     Use this endpoint to register new user.
     """
+
     serializer_class = settings.SERIALIZERS.user_create
     permission_classes = [permissions.AllowAny]
 
@@ -36,7 +38,7 @@ class MyUserCreateView(generics.CreateAPIView):
             sender=self.__class__, user=user, request=self.request
         )
 
-        context = {'user': user}
+        context = {"user": user}
         to = [get_user_email(user)]
         if settings.SEND_ACTIVATION_EMAIL:
             settings.EMAIL.activation(self.request, context).send(to)
@@ -44,19 +46,19 @@ class MyUserCreateView(generics.CreateAPIView):
             settings.EMAIL.confirmation(self.request, context).send(to)
 
 
-
 from djoser.conf import django_settings
 
 
 class ActivateUserByGet(views.APIView):
+    def get(self, request, uid, token, format=None):
+        payload = {"uid": uid, "token": token}
 
-    def get(self, request, uid, token, format = None):
-        payload = {'uid': uid, 'token': token}
-
-        url = '{0}://{1}{2}'.format(django_settings.PROTOCOL, django_settings.DOMAIN, reverse('user-activate'))
-        response = requests.post(url, data = payload)
+        url = "{0}://{1}{2}".format(
+            django_settings.PROTOCOL, django_settings.DOMAIN, reverse("user-activate")
+        )
+        response = requests.post(url, data=payload)
 
         if response.status_code == 204:
-            return Response({'detail': 'all good sir'})
+            return Response({"detail": "all good sir"})
         else:
             return Response(response.json())

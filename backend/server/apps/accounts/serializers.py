@@ -1,4 +1,3 @@
-
 import warnings
 
 from django.contrib.auth import authenticate, get_user_model
@@ -19,82 +18,78 @@ from .models import Membership
 from organizations.utils import create_organization
 from django.template.defaultfilters import slugify
 
-class MyUserCreateSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
-        style={'input_type': 'password'},
-        write_only=True
-    )
 
-    username = serializers.CharField(
-        write_only=True,
-        required=True
-    )
+class MyUserCreateSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(style={"input_type": "password"}, write_only=True)
+
+    username = serializers.CharField(write_only=True, required=True)
 
     organization = serializers.CharField(write_only=True, required=True)
 
-    default_error_messages = {
-        'cannot_create_user': constants.CANNOT_CREATE_USER_ERROR,
-    }
+    default_error_messages = {"cannot_create_user": constants.CANNOT_CREATE_USER_ERROR}
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'organization')
+        fields = ("username", "email", "password", "organization")
 
     def validate(self, attrs):
-        print('serializer validate', attrs)
-        organization = attrs.get('organization')
-        username = attrs.get('username')
-        email = attrs.get('email')
-        password = attrs.get('password')
+        print("serializer validate", attrs)
+        organization = attrs.get("organization")
+        username = attrs.get("username")
+        email = attrs.get("email")
+        password = attrs.get("password")
 
         user = User(username=username, email=email, password=password)
 
         if MyOrganization.objects.filter(slug=slugify(organization)).exists():
-            raise serializers.ValidationError({'organization': 'orgnization with this name already exists'})
+            raise serializers.ValidationError(
+                {"organization": "orgnization with this name already exists"}
+            )
 
         try:
             validate_password(password, user)
         except django_exceptions.ValidationError as e:
-            raise serializers.ValidationError({'password': list(e.messages)})
+            raise serializers.ValidationError({"password": list(e.messages)})
 
         return attrs
 
     def create(self, validated_data):
         try:
-            print('serializer.create')
+            print("serializer.create")
             user = self.perform_create(validated_data)
         except IntegrityError as e:
-            self.fail('cannot_create_user')
+            self.fail("cannot_create_user")
 
         return user
 
     def perform_create(self, validated_data):
-        print('srializers perform_create')
+        print("srializers perform_create")
         with transaction.atomic():
 
-            organization = validated_data.get('organization')
+            organization = validated_data.get("organization")
 
-            user_validated_data = {'username': validated_data.get('username'),
-                                    'email': validated_data.get('email'),
-                                    'password': validated_data.get('password')}
+            user_validated_data = {
+                "username": validated_data.get("username"),
+                "email": validated_data.get("email"),
+                "password": validated_data.get("password"),
+            }
             user = User.objects.create_user(**user_validated_data)
 
             my_org = MyOrganization(name=organization)
             my_org.save()
             print(my_org)
 
-            print('memberships', Membership.objects.filter(user=user))
-            m1 = Membership(user=user, organization=my_org, status='admin')
+            print("memberships", Membership.objects.filter(user=user))
+            m1 = Membership(user=user, organization=my_org, status="admin")
             m1.save()
-            print('memberships', Membership.objects.filter(user=user))
+            print("memberships", Membership.objects.filter(user=user))
 
             orgs = MyOrganization.objects.all()
             print(orgs)
             for o in orgs:
-                print('>', o, o.name)
-
+                print(">", o, o.name)
 
             if settings.SEND_ACTIVATION_EMAIL:
                 user.is_active = False
-                user.save(update_fields=['is_active'])
+                user.save(update_fields=["is_active"])
         return user
