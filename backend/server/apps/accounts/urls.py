@@ -5,6 +5,7 @@ from django.conf.urls import url, include
 
 from .views import ActivateUserByGet
 from .views import MyUserCreateView
+from .views import MyUserOrganizationList
 
 from django.contrib.auth import get_user_model
 from djoser import views
@@ -16,7 +17,7 @@ User = get_user_model()
 
 urlpatterns = [
     url(r'^users/create/?$', MyUserCreateView.as_view(), name='user_create'),
-    url(r'^users/me/?$', views.UserView.as_view(), name='user'),
+    #url(r'^users/me/?$', views.UserView.as_view(), name='user'),
     #url(r'^users/create/?$', views.UserCreateView.as_view(), name='user-create'),
     url(
         r'^users/delete/?$',
@@ -43,5 +44,9 @@ urlpatterns = [
     url(r'^auth/', include('djoser.urls.authtoken')),
     path('activate/<str:uid>/<str:token>/', ActivateUserByGet.as_view()),
 
-
+    url(
+        r'^user/organization/?$',
+        MyUserOrganizationList.as_view(),
+        name='user_organization'
+    ),
 ]

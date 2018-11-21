@@ -18,6 +18,11 @@ from .models import Membership
 from organizations.utils import create_organization
 from django.template.defaultfilters import slugify
 
+class OrganizationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MyOrganization
+        fields = ('name', 'slug')
 
 class MyUserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={"input_type": "password"}, write_only=True)
@@ -33,7 +38,6 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
         fields = ("username", "email", "password", "organization")
 
     def validate(self, attrs):
-        print("serializer validate", attrs)
         organization = attrs.get("organization")
         username = attrs.get("username")
         email = attrs.get("email")
@@ -55,7 +59,6 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         try:
-            print("serializer.create")
             user = self.perform_create(validated_data)
         except IntegrityError as e:
             self.fail("cannot_create_user")
@@ -63,7 +66,6 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
         return user
 
     def perform_create(self, validated_data):
-        print("srializers perform_create")
         with transaction.atomic():
 
             organization = validated_data.get("organization")
@@ -77,17 +79,11 @@ class MyUserCreateSerializer(serializers.ModelSerializer):
 
             my_org = MyOrganization(name=organization)
             my_org.save()
-            print(my_org)
 
-            print("memberships", Membership.objects.filter(user=user))
             m1 = Membership(user=user, organization=my_org, status="admin")
             m1.save()
-            print("memberships", Membership.objects.filter(user=user))
 
             orgs = MyOrganization.objects.all()
-            print(orgs)
-            for o in orgs:
-                print(">", o, o.name)
 
             if settings.SEND_ACTIVATION_EMAIL:
                 user.is_active = False

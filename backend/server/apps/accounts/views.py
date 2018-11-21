@@ -23,6 +23,18 @@ from djoser.conf import settings
 
 from rest_framework import generics, permissions, status, views, viewsets
 
+from accounts.models import Membership
+from accounts.models import MyOrganization
+
+from accounts.serializers import OrganizationSerializer
+
+class MyUserOrganizationList(generics.ListAPIView):
+    serializer_class = OrganizationSerializer
+    permission_classes = ()
+    def get_queryset(self):
+        user = self.request.user
+        return MyOrganization.objects.filter(myuser=user)
+
 
 class MyUserCreateView(generics.CreateAPIView):
     """
@@ -54,7 +66,7 @@ class ActivateUserByGet(views.APIView):
         payload = {"uid": uid, "token": token}
 
         url = "{0}://{1}{2}".format(
-            django_settings.PROTOCOL, django_settings.DOMAIN, reverse("user-activate")
+            django_settings.PROTOCOL, django_settings.DOMAIN, reverse("user_activate")
         )
         response = requests.post(url, data=payload)
 

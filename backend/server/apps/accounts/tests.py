@@ -28,6 +28,25 @@ class SignupTestCase(TestCase):
             return request.json()
         return None
 
+    def test_get_organizations(self):
+        # create user #1
+        self.post_request_and_check(reverse('user_create'), self.params, 201)
+        # create user #2
+        params2 = copy.deepcopy(self.params)
+        params2['email'] = 'new@email.com'
+        params2['organization'] = 'some new co'
+        self.post_request_and_check(reverse('user_create'), params2, 201)
+
+        # login
+        token = self.post_request_and_check(reverse('login'), self.params, 200).get('auth_token')
+
+        headers = {'HTTP_AUTHORIZATION': 'Token '+token}
+        request = self.client.get(reverse('user_organization'), content_type="application/json", **headers)
+        print(request.status_code)
+        print(request.json())
+
+
+
     def test_create_and_delete(self):
         # create user
         self.post_request_and_check(reverse('user_create'), self.params, 201)

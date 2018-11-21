@@ -20,8 +20,6 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
         tokens = Token.objects.all()
-        for t in tokens:
-            print("t", t)
 
 
 class AutoCreatedField(models.DateTimeField):
@@ -81,6 +79,9 @@ class MyOrganization(models.Model):
             self.slug = slugify(self.name)
         super(MyOrganization, self).save(*args, **kwargs)
 
+    #class Meta:
+    #    #abstract = True  # specify this model as an Abstract Model
+    #    app_label = 'accounts'    
 
 class MyUser(AbstractUser):
     email = models.EmailField(
@@ -101,9 +102,7 @@ class MyUser(AbstractUser):
     objects = MyUserManager()
 
     def delete(self, *args, **kwargs):
-        print("user delete")
-        super().delete(*args, **kwargs)  # Call the "real" save() method.
-        print("after user delete")
+        super().delete(*args, **kwargs)
 
 
 class Membership(models.Model):
