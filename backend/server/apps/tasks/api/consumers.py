@@ -7,15 +7,20 @@ class TasksConsumer(AsyncWebsocketConsumer):
         """
         Called when the websocket is handshaking as part of initial connection.
         """
+        self.group_name = None
         print(self.scope)
-        if self.scope.get('user'):
-            if self.scope.get('user').is_anonymous:
+        user = self.scope.get('user')
+        organization = self.scope.get('organization')
+        if user is None or organization is None:
+            await self.close()
+        else:
+            if user.is_anonymous or organization is None:
                 print('Go away anonymous')
-                self.group_name = None
                 await self.close()
             else:
-                print('I know you, my user', self.scope.get('user'))
-                self.group_name = 'tasks'
+                print('I know you, my user', self.scope.get('user'), 'from', organization.slug)
+
+                self.group_name = organization.slug
                 await self.channel_layer.group_add(self.group_name, self.channel_name)
                 await self.accept()
 
