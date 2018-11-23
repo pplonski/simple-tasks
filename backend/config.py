@@ -11,3 +11,5 @@ DATABASE_PASS = os.environ.get('DATABASE_PASS', '1234')
 DATABASE_PORT = os.environ.get('DATABASE_PORT', '5433')
 
 DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG', True)
+
+WORKER_TOKEN = os.environ.get('WORKER_TOKEN', 'worker_token')

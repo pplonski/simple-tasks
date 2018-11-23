@@ -21,6 +21,18 @@ class TestTasksWebSocket(TestTasksBase):
         #result =  json.loads(ws.recv())
         ws.close()
 
+    def test_ws_auth_worker(self):
+        token = 'worker_token'
+        ws_server = '{0}?token={1}&organization={2}'.format(self.get_server_ws(),
+                                                        token, 'big-co')
+        print(ws_server)
+        ws = create_connection(ws_server)
+
+        #task = self.create_task(2,2)
+        #self.assertEqual(task['state'], 'CREATED')
+        #result =  json.loads(ws.recv())
+        ws.close()
+
     '''
     def test_ws_progress(self):
 
