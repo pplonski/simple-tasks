@@ -15,14 +15,13 @@ User = get_user_model()
 from .models import MyOrganization
 from .models import Membership
 
-from organizations.utils import create_organization
 from django.template.defaultfilters import slugify
 
 class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MyOrganization
-        fields = ('name', 'slug')
+        fields = ('id', 'name', 'slug')
 
 class MyUserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={"input_type": "password"}, write_only=True)

@@ -9,6 +9,18 @@ from test_tasks_base import TestTasksBase
 
 class TestTasksWebSocket(TestTasksBase):
 
+    def test_ws_auth(self):
+        token = self.create_user_and_login()
+
+        print(self.get_server_ws()+'?token='+token)
+        ws = create_connection(self.get_server_ws()+'?token='+token)
+
+        #task = self.create_task(2,2)
+        #self.assertEqual(task['state'], 'CREATED')
+        #result =  json.loads(ws.recv())
+        ws.close()
+
+    '''
     def test_ws_progress(self):
 
         ws = create_connection(self.get_server_ws())
@@ -85,3 +97,4 @@ class TestTasksWebSocket(TestTasksBase):
         self.assertTrue('state' in result['data'])
         self.assertTrue('db_id' in result['data'])
         self.assertEqual('FAILURE', result['data']['state'])
+    '''

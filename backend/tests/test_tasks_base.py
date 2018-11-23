@@ -20,3 +20,23 @@ class TestTasksBase(unittest.TestCase):
         r = requests.get(self.get_server_url()+'/api/tasks/{0}'.format(id))
         self.assertEqual(r.status_code, 200)
         return r.json()
+
+    def create_user_and_login(self):
+        data = {'username': 'piotrek',
+                'email': 'piotrek@piotrek.pl',
+                'password': 'verysecret',
+                'organization': 'big co'}
+        r = requests.post(self.get_server_url()+'/users/create', json=data)
+        #if r.status_code == 400:
+        #    if 'email' in r.json():
+        #        # user already exists
+        #self.assertEqual(r.status_code, 201)
+        r = requests.post(self.get_server_url()+'/auth/token/login', json=data)
+        self.assertEqual(r.status_code, 200)
+        token = r.json().get('auth_token')
+        return token
+
+    def delete_user(self, token):
+        headers = {'Authorization': 'Token '+token}
+        r = requests.post(self.get_server_url()+'/users/delete', headers=headers)
+        self.assertEqual(r.status_code, 204)

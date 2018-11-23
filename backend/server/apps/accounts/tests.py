@@ -5,6 +5,11 @@ import copy
 from rest_framework.reverse import reverse
 from django.core import mail
 
+from channels.testing import WebsocketCommunicator
+from server.routing import application
+import pytest
+
+
 class SignupTestCase(TestCase):
 
     def setUp(self):
@@ -36,15 +41,20 @@ class SignupTestCase(TestCase):
         params2['email'] = 'new@email.com'
         params2['organization'] = 'some new co'
         self.post_request_and_check(reverse('user_create'), params2, 201)
-
-        # login
+        # login user #1
         token = self.post_request_and_check(reverse('login'), self.params, 200).get('auth_token')
-
         headers = {'HTTP_AUTHORIZATION': 'Token '+token}
         request = self.client.get(reverse('user_organization'), content_type="application/json", **headers)
-        print(request.status_code)
-        print(request.json())
-
+        self.assertEqual(request.status_code, 200)
+        self.assertEqual(request.json()[0]['name'], self.params['organization'])
+        self.assertEqual(len(request.json()), 1)
+        # login user #2
+        token = self.post_request_and_check(reverse('login'), params2, 200).get('auth_token')
+        headers = {'HTTP_AUTHORIZATION': 'Token '+token}
+        request = self.client.get(reverse('user_organization'), content_type="application/json", **headers)
+        self.assertEqual(request.status_code, 200)
+        self.assertEqual(request.json()[0]['name'], params2['organization'])
+        self.assertEqual(len(request.json()), 1)
 
 
     def test_create_and_delete(self):

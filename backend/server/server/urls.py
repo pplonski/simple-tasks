@@ -5,7 +5,7 @@ from django.conf.urls import url, include
 
 from rest_framework_swagger.views import get_swagger_view
 
-from apps.accounts.urls import urlpatterns as auth_urlpatterns
+from apps.accounts.urls import urlpatterns as accounts_urlpatterns
 
 schema_view = get_swagger_view(title='Pastebin API')
 
@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^schema/$', schema_view),
 ]
 
-urlpatterns += auth_urlpatterns
+urlpatterns += accounts_urlpatterns
 
 if settings.DEBUG:
     from django.conf.urls.static import static

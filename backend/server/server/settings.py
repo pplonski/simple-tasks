@@ -193,6 +193,7 @@ SITE_ID = 1
 ASGI_APPLICATION = "server.routing.application"
 
 from config import REDIS_URL, REDIS_PORT
+print('REDIS', REDIS_URL, REDIS_PORT)
 
 CHANNEL_LAYERS = {
     'default': {
