@@ -6,8 +6,11 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Task
-        read_only_fields = ('id', 'state', 'result', 'task_id',)
-        fields = ('id', 'state', 'params', 'result', 'task_id')
+        read_only_fields = ('id', 'state', 'result', 'task_id', 'created_by')
+        fields = ('params', 'id', 'state', 'result', 'task_id', 'created_by', 'parent_organization')
+        extra_kwargs = {
+            'parent_organization': {'write_only': True}
+        }
 
     def validate_params(self, params):
         if params is None or params == '':

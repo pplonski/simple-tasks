@@ -55,13 +55,17 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'djoser',
-    'channels',
+    #'channels',
     #'organizations',
     'django_extensions',
     # Project Apps
     'tasks',
     'accounts',
 ]
+
+ASGI_APPLICATION = "server.routing.application"
+
+
 #AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 AUTH_USER_MODEL = 'accounts.MyUser'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -189,8 +193,6 @@ MEDIA_URL = '/media/'
 
 # Site ID
 SITE_ID = 1
-
-ASGI_APPLICATION = "server.routing.application"
 
 from config import REDIS_URL, REDIS_PORT
 print('REDIS', REDIS_URL, REDIS_PORT)

@@ -1,4 +1,3 @@
-
 import unittest
 import requests
 import time
@@ -7,47 +6,37 @@ from websocket import create_connection
 from websocket._exceptions import WebSocketTimeoutException
 from test_tasks_base import TestTasksBase
 
+
 class TestTasksWebSocket(TestTasksBase):
-
-    def test_ws_auth(self):
+    def connect(self):
         token = self.create_user_and_login()
-        ws_server = '{0}?token={1}&organization={2}'.format(self.get_server_ws(),
-                                                        token, 'big-co')
-        print(ws_server)
-        ws = create_connection(ws_server)
+        ws_server = "{0}?token={1}&organization={2}".format(
+            self.get_server_ws(), token, "big-co"
+        )
+        self.ws = create_connection(ws_server)
 
-        #task = self.create_task(2,2)
-        #self.assertEqual(task['state'], 'CREATED')
-        #result =  json.loads(ws.recv())
-        ws.close()
+    #def test_ws_auth(self):
+    #    self.connect()
+    #    self.ws.close()
 
-    def test_ws_auth_worker(self):
-        token = 'worker_token'
-        ws_server = '{0}?token={1}&organization={2}'.format(self.get_server_ws(),
-                                                        token, 'big-co')
-        print(ws_server)
-        ws = create_connection(ws_server)
-
-        #task = self.create_task(2,2)
-        #self.assertEqual(task['state'], 'CREATED')
-        #result =  json.loads(ws.recv())
-        ws.close()
-
-    '''
     def test_ws_progress(self):
+        #self.connect()
 
-        ws = create_connection(self.get_server_ws())
+        #self.get_task(1)
+        _ = self.create_user_and_login()
+        task = self.create_task(2, 2)
+        task = self.get_task(7)
+        #self.assertEqual(task["state"], "CREATED")
+        #result = json.loads(self.ws.recv())
+        #print('result', result)
+        #self.ws.close()
 
-        task = self.create_task(2,2)
-        self.assertEqual(task['state'], 'CREATED')
-        result =  json.loads(ws.recv())
-        ws.close()
+        #self.assertTrue("data" in result)
+        #self.assertTrue("progress" in result["data"])
+        #self.assertTrue("db_id" in result["data"])
+        #self.assertEqual(task["id"], result["data"]["db_id"])
 
-        self.assertTrue('data' in result)
-        self.assertTrue('progress' in result['data'])
-        self.assertTrue('db_id' in result['data'])
-        self.assertEqual(task['id'], result['data']['db_id'])
-
+    """
     def test_ws_ends_success(self):
 
         ws = create_connection(self.get_server_ws())
@@ -110,4 +99,4 @@ class TestTasksWebSocket(TestTasksBase):
         self.assertTrue('state' in result['data'])
         self.assertTrue('db_id' in result['data'])
         self.assertEqual('FAILURE', result['data']['state'])
-    '''
+    """
