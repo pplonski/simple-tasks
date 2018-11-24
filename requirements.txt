@@ -109,3 +109,4 @@ yarl==1.2.6
 zope.interface==4.5.0
 djoser
 django_extensions
+drf-nested-routers

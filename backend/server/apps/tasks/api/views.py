@@ -69,7 +69,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     permission_classes = (IsAuthenticatedAndMembership, )
 
-    lookup_url_kwarg = 'slug'
+    #lookup_url_kwarg = 'slug'
 
     def perform_create(self, serializer):
         try:
