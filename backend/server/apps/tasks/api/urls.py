@@ -7,5 +7,5 @@ router = DefaultRouter(trailing_slash=False)
 router.register(r'tasks', TaskViewSet, base_name='tasks')
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^api/<str:slug>/$', include(router.urls)),
 ]

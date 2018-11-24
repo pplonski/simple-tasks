@@ -15,25 +15,28 @@ import copy
 from accounts.models import Membership
 
 
-class IsAuthenticatedAndOwner(permissions.BasePermission):
+class IsAuthenticatedAndMembership(permissions.BasePermission):
     message = "You must be the owner of this object."
 
     def has_permission(self, request, view):
-        print("has_permission")
-        return True
-        print(request.data)
-        print(request.data.get("parent_organization"))
+        print("has_permission", request.data, request.method)
+        print(self.lookup_url_kwarg or self.lookup_field)
         if request.user is None:
             return False
         if not request.user.is_authenticated:
             return False
         if not request.data.get("parent_organization"):
             return False
+
         try:
+            permissed_statuses = ["admin", "member"]
+            if request.method in ['GET']:
+                permissed_statuses += ["view"]
+
             Membership.objects.get(
                 user=request.user,
                 organization=request.data.get("parent_organization"),
-                status__in=["admin", "member"],
+                status__in=permissed_statuses,
             )
         except Membership.DoesNotExist:
             print("Membership does not exist")
@@ -43,14 +46,30 @@ class IsAuthenticatedAndOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         print("has_object_permission", obj.created_by, request.user)
-        return True #obj.user == request.user
+        try:
+            permissed_statuses = ["admin", "member"]
+            if request.method in permissions.SAFE_METHODS:
+                permissed_statuses += ["view"]
+
+            Membership.objects.get(
+                user=request.user,
+                organization=obj.get("parent_organization"),
+                status__in=permissed_statuses,
+            )
+        except Membership.DoesNotExist:
+            print("Membership does not exist")
+            return False
+
+        return True
 
 
 class TaskViewSet(viewsets.ModelViewSet):
 
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
-    permission_classes = (permissions.IsAuthenticated, IsAuthenticatedAndOwner)
+    permission_classes = (IsAuthenticatedAndMembership, )
+
+    lookup_url_kwarg = 'slug'
 
     def perform_create(self, serializer):
         try:

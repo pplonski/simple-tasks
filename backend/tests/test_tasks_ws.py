@@ -25,7 +25,7 @@ class TestTasksWebSocket(TestTasksBase):
         #self.get_task(1)
         _ = self.create_user_and_login()
         task = self.create_task(2, 2)
-        task = self.get_task(7)
+        #task = self.get_task(1)
         #self.assertEqual(task["state"], "CREATED")
         #result = json.loads(self.ws.recv())
         #print('result', result)
