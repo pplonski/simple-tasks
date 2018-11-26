@@ -36,6 +36,12 @@ class MyUserOrganizationList(generics.ListAPIView):
         return MyOrganization.objects.filter(myuser=user)
 
 
+class MyOrganizationViewSet(viewsets.ModelViewSet):
+    queryset = MyOrganization.objects.all()
+    serializer_class = OrganizationSerializer
+    permission_classes = (permissions.IsAuthenticated, )
+
+
 class MyUserCreateView(generics.CreateAPIView):
     """
     Use this endpoint to register new user.

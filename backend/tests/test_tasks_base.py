@@ -19,7 +19,7 @@ class TestTasksBase(unittest.TestCase):
         data = {"params": {"arg1": arg1, "arg2": arg2}, "parent_organization": 1}
         headers = {"Authorization": "Token " + self.token}
         r = requests.post(
-            self.get_server_url() + "/api/dada/tasks", json=data, headers=headers
+            self.get_server_url() + "/api/big-co/tasks", json=data, headers=headers
         )
         if r.status_code != 201:
             print(r.json())

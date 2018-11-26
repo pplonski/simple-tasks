@@ -20,13 +20,18 @@ class IsAuthenticatedAndMembership(permissions.BasePermission):
 
     def has_permission(self, request, view):
         print("has_permission", request.data, request.method)
-        print(self.lookup_url_kwarg or self.lookup_field)
+
+        print('data', request.data)
+        print('query', view.kwargs)
+
         if request.user is None:
             return False
         if not request.user.is_authenticated:
             return False
+
         if not request.data.get("parent_organization"):
             return False
+
 
         try:
             permissed_statuses = ["admin", "member"]
@@ -69,7 +74,9 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     permission_classes = (IsAuthenticatedAndMembership, )
 
-    #lookup_url_kwarg = 'slug'
+    def get_queryset(self):
+        print('kwargs', self.kwargs)
+        return Task.objects.all() #filter(parent_organization=self.kwargs['organization_pk'])
 
     def perform_create(self, serializer):
         try:
