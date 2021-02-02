@@ -11,7 +11,7 @@ Automat==0.7.0
 Babel==2.6.0
 backcall==0.1.0
 billiard==3.5.0.4
-bleach==3.0.1
+bleach==3.3.0
 celery==4.2.1
 Cerberus==1.2
 certifi==2018.8.24
