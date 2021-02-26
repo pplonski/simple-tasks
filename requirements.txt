@@ -1,5 +1,5 @@
 about-time==2.0.4
-aiohttp==3.4.4
+aiohttp==3.7.4
 aioredis==1.1.0
 amqp==2.3.2
 asgiref==2.3.2
