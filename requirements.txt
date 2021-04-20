@@ -6,7 +6,7 @@ asgiref==2.3.2
 astroid==2.0.4
 async-timeout==3.0.1
 attrs==18.2.0
-autobahn==18.9.2
+autobahn==20.12.3
 Automat==0.7.0
 Babel==2.6.0
 backcall==0.1.0
