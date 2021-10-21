@@ -8,7 +8,7 @@ async-timeout==3.0.1
 attrs==18.2.0
 autobahn==18.9.2
 Automat==0.7.0
-Babel==2.6.0
+Babel==2.9.1
 backcall==0.1.0
 billiard==3.5.0.4
 bleach==3.0.1
