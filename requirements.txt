@@ -93,7 +93,7 @@ terminado==0.8.1
 testpath==0.4.2
 tornado==5.1.1
 traitlets==4.3.2
-Twisted==18.7.0
+Twisted==22.10.0
 txaio==18.8.1
 typed-ast==1.1.0
 uritemplate==3.0.0
